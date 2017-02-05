@@ -5,12 +5,12 @@ from django.utils import timezone
 
 
 class Comment(models.Model):
+    book = models.ForeignKey('Book')
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     text = models.TextField()
     published_date = models.DateTimeField(
             blank=True, null=True)
-    book = models.ForeignKey('Book')
 
     def publish(self):
         self.published_date = timezone.now()
@@ -21,6 +21,7 @@ class Comment(models.Model):
 
 
 class Book(models.Model):
+    category = models.ForeignKey('Category')
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
     reading_time = models.PositiveSmallIntegerField()
@@ -29,7 +30,6 @@ class Book(models.Model):
             default=timezone.now)
     published_date = models.DateTimeField(
             blank=True, null=True)
-    category = models.ForeignKey('Category')
 
     def publish(self):
         self.published_date = timezone.now()
